@@ -1,0 +1,7 @@
+email,name,team,timezone,paused,avoid
+ada@example.com,Ada Lovelace,edge-runtime,Europe/London,,
+grace@example.com,Grace Hopper,control-plane,America/New_York,,
+alan@example.com,Alan Turing,edge-runtime,Europe/London,,
+barbara@example.com,Barbara Liskov,observability,America/Los_Angeles,,
+edsger@example.com,Edsger Dijkstra,control-plane,Europe/Amsterdam,,
+radia@example.com,Radia Perlman,observability,America/New_York,,
