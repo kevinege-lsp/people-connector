@@ -146,21 +146,27 @@ given `--force`.
 ## CLI
 
 ```
-people-connector init                        # scaffold a roster.csv
-people-connector add EMAIL --name --team --timezone
-people-connector remove EMAIL
-people-connector pause EMAIL | resume EMAIL
-people-connector avoid EMAIL OTHER           # mutual, hard constraint
-people-connector list [--all]
+./people-connector init                        # scaffold a roster.csv
+./people-connector add EMAIL --name --team --timezone
+./people-connector remove EMAIL
+./people-connector pause EMAIL | resume EMAIL
+./people-connector avoid EMAIL OTHER           # mutual, hard constraint
+./people-connector list [--all]
 
-people-connector preview                     # dry run, prints, writes nothing
-people-connector run [--date] [--seed] [--no-triads] [--force] [--out-dir]
-people-connector history [--last N]
-people-connector undo                        # pop the most recent cycle
-people-connector stats [--person EMAIL]      # coverage and per-person counts
+./people-connector preview                     # dry run, prints, writes nothing
+./people-connector run [--date] [--seed] [--no-triads] [--force] [--out-dir]
+./people-connector history [--last N]
+./people-connector undo                        # pop the most recent cycle
+./people-connector stats [--person EMAIL]      # coverage and per-person counts
 ```
 
 Global: `--roster PATH`, `--history PATH`.
+
+There is no install step and no build backend: `./people-connector` is a shell
+wrapper that puts the repo root on `PYTHONPATH` and execs
+`python -m people_connector`. The only dependency is `networkx`, from
+`requirements.txt`. This keeps the tool deployable somewhere that cannot reach
+PyPI at build time.
 
 ## Output
 
@@ -178,7 +184,7 @@ Global: `--roster PATH`, `--history PATH`.
 A weekly cron entry, run from the directory holding the roster:
 
 ```
-0 9 * * MON  cd ~/people-connector && .venv/bin/people-connector run
+0 9 * * MON  cd ~/people-connector && ./people-connector run
 ```
 
 Then paste `cycles/cycle-NNN.slack.txt` into the channel. Delivery is manual by
@@ -187,7 +193,7 @@ list each week catches roster problems that no amount of validation would.
 
 ## Health check
 
-`stats` reports the number the whole thing exists to move: **coverage**, the
+`./people-connector stats` reports the number the whole thing exists to move: **coverage**, the
 fraction of all possible pairs who have met. It also lists per-person meeting
 counts, so you can spot someone who joined recently and is behind, and
 `--person` shows who a given person still hasn't met.

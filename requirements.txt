@@ -1,0 +1,2 @@
+# Runtime. Install with: .venv/bin/pip install -r requirements.txt
+networkx>=3.0

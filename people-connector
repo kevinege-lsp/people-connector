@@ -1,0 +1,23 @@
+#!/bin/sh
+# Thin wrapper so the tool runs without being installed as a package.
+#
+# Sets PYTHONPATH to the repo root so `python -m people_connector` resolves no
+# matter where you invoke it from, and prefers the project venv if one exists.
+# Roster and history paths stay relative to your working directory, which is
+# what you want: cd into the directory holding roster.csv, then run this.
+
+set -e
+
+here=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+
+if [ -x "$here/.venv/bin/python" ]; then
+    python=$here/.venv/bin/python
+elif command -v python3 >/dev/null 2>&1; then
+    python=python3
+else
+    echo "people-connector: no python3 found on PATH" >&2
+    exit 1
+fi
+
+PYTHONPATH="$here${PYTHONPATH:+:$PYTHONPATH}" export PYTHONPATH
+exec "$python" -m people_connector "$@"
